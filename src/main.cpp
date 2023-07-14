@@ -1,7 +1,8 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
+#include <led.h>
+#include <helper.h>
 
-#define LED           GPIO_NUM_35
 #define OLED_WIDTH    128
 #define OLED_HEIGHT   64
 #define OLED_SDA      GPIO_NUM_17
@@ -10,9 +11,6 @@
 
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C g_OLED(U8G2_R2, OLED_SCL, OLED_SDA, OLED_RST);
 int g_lineHeight = 0;
-
-// forward dec
-void blink(int millisecondsOn, int millisecondsAfter);
 
 // init
 void setup() {
@@ -27,7 +25,7 @@ void setup() {
   g_lineHeight = g_OLED.getFontAscent() + g_OLED.getFontAscent();
 
   g_OLED.setCursor(0, g_lineHeight);
-  g_OLED.print("Be wise, friend");
+  g_OLED.print(testMessage());
   g_OLED.sendBuffer();
 }
 
@@ -37,9 +35,3 @@ void loop() {
   blink(1500, 600);
 }
 
-void blink(int millisecondsOn, int millisecondsAfter) {
-  digitalWrite(LED, HIGH);
-  delay(millisecondsOn);
-  digitalWrite(LED, LOW);
-  delay(millisecondsAfter);
-}
